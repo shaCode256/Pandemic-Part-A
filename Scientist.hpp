@@ -15,7 +15,7 @@ namespace pandemic
         }
         std::string role()
         {
-            return "role";
+            return "Scientist";
         }
     };
 }

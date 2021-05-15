@@ -7,7 +7,6 @@
 
 //describes the actions a player can do in this pandemic game.
 
-using namespace pandemic;
 
 namespace pandemic
 {
@@ -15,13 +14,11 @@ namespace pandemic
     {
     private:
         Board gameBoard;
-        std::vector<City> cards;
+        std::map<City, int> cards;
         City currentCity;
 
     public:
-        Player(Board board, City city){
-
-        };
+        Player(Board board, City city){};
         ~Player() = default; //destructor
 
         void remove_cures();
