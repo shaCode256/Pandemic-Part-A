@@ -33,7 +33,7 @@ Player &Player::build()
 Player &Player::discover_cure(Color color)
 {
     //if there was already a cure found to this desease (color)
-    if (gameBoard.citiesMap[currentCity].cure_found== true)
+    if (gameBoard.citiesMap[currentCity].cure_found == true)
     {
         return *this;
     }
@@ -87,10 +87,12 @@ Player &Player::discover_cure(Color color)
 Player &Player::drive(City cityTo)
 {
     // std::string cityString = ENUM_TO_STR(cityTo);
-    if(gameBoard.cities_connections[currentCity].find(cityTo)!=gameBoard.cities_connections[currentCity].end()){
-        currentCity= cityTo;
+    if (gameBoard.cities_connections[currentCity].find(cityTo) != gameBoard.cities_connections[currentCity].end())
+    {
+        currentCity = cityTo;
     }
-    else{
+    else
+    {
         throw std::invalid_argument("you can't drive to this city. it's not connected to you");
     }
     return *this;
@@ -118,10 +120,12 @@ Player &Player::fly_direct(City cityTo)
 
 Player &Player::fly_shuttle(City cityTo)
 {
-    if(gameBoard.citiesMap[currentCity].research_lab_exist && gameBoard.citiesMap[cityTo].research_lab_exist ){
+    if (gameBoard.citiesMap[currentCity].research_lab_exist && gameBoard.citiesMap[cityTo].research_lab_exist)
+    {
         currentCity = cityTo;
     }
-    else{
+    else
+    {
         throw std::invalid_argument("you can't shuttle fly to this city. at least one of the cities (yours and the desired one) doesn't have a lab");
     }
     return *this;

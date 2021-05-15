@@ -18,8 +18,9 @@ namespace pandemic
         bool research_lab_exist;
         CityClass(){}; // in Rectangle.h
 
-    CityClass(City name_){
+    CityClass(City name_, Color color_){
         name= name_;
+        color= color_;
     }
         // friend std::ostream &operator<<(std::ostream &outStream, pandemic::Board &board){
         //    return outStream; 

@@ -2,6 +2,7 @@
 
 using namespace pandemic;
 
-Dispatcher &Dispatcher::build() {
+Dispatcher &Dispatcher::fly_direct(City cityTo) {
+    currentCity=cityTo;
     return *this;
 }

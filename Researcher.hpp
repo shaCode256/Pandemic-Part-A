@@ -6,7 +6,7 @@ namespace pandemic
     class Researcher : public Player
     {
     public:
-        Researcher &build();
+        Researcher &discover_cure(Color color);
         Researcher (Board &board, City city) : Player(board, city)
         {
         }

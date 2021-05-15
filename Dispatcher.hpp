@@ -6,7 +6,7 @@ namespace pandemic
     class Dispatcher : public Player
     {
     public:
-        Dispatcher &build();
+        Dispatcher &fly_direct(City cityTo);
         Dispatcher (Board &board, City city) : Player(board, city)
         {
         }

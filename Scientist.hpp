@@ -8,7 +8,7 @@ namespace pandemic
         private:
         int CardsToCure=0;
     public:
-        Scientist &build();
+        Scientist &discover_cure(Color color);
         Scientist (Board &board, City city, int numCardsToCure) : Player(board, city)
         {
             CardsToCure= numCardsToCure;
