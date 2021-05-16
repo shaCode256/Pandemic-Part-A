@@ -35,4 +35,4 @@ valgrind: demo1 demo2 test
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 clean:
-	rm -f *.o demo1 demo2 test
+	rm -f *.o *.Identifier demo1 demo2 test 
