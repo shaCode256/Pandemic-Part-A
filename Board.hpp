@@ -128,7 +128,10 @@ namespace pandemic
             {City::Tokyo, {City::Seoul, City::Shanghai, City::Osaka, City::SanFrancisco}},
             {City::Washington, {City::Atlanta, City::NewYork, City::Montreal, City::Miami}}};
 
-        int cures_found = 0;
+        std::map<Color, bool> cures_found{
+            {Color::Black, false}, {Color::Blue, false},  {Color::Yellow, false},  {Color::Red, false}
+        };
+
         int research_labs_num = 0;
         friend std::ostream &operator<<(std::ostream &outStream, Board &board);
         int &operator[](City city);
@@ -146,15 +149,25 @@ namespace pandemic
             }
             return true;
         }
+
         void remove_cures()
         {
+            std::map<Color, bool>::iterator iter = cures_found.begin();
+            std::map<Color, bool>::iterator endIter = cures_found.end();
+            for (; iter != endIter; ++iter)
+            {
+                iter->second= false;
+            }
+        };
+
+        void remove_stations(){
             std::map<City, CityClass>::iterator iter = citiesMap.begin();
             std::map<City, CityClass>::iterator endIter = citiesMap.end();
             for (; iter != endIter; ++iter)
             {
-                iter->second.cure_found = false;
+                iter->second.research_lab_exist= false;
             }
-        };
+        }
     };
 
 }

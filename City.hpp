@@ -55,4 +55,6 @@ namespace pandemic {
 , SaoPaulo	
 	};
 
+std::string getCityNameByEnum(int enumID);
+
 }

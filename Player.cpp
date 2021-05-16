@@ -3,7 +3,7 @@
 #include "City.hpp"
 #include "Board.hpp"
 #include <stdexcept>
-// #define ENUM_TO_STR(ENUM) std::string(#ENUM)
+//#define ENUM_TO_STR(ENUM) std::string(#ENUM)
 //implements the actions a player can do in this pandemic game.
 
 using namespace pandemic;
@@ -33,7 +33,7 @@ Player &Player::build()
 Player &Player::discover_cure(Color color)
 {
     //if there was already a cure found to this desease (color)
-    if (gameBoard.citiesMap[currentCity].cure_found == true)
+    if (gameBoard.cures_found[gameBoard.citiesMap[currentCity].color] == true)
     {
         return *this;
     }
@@ -42,7 +42,6 @@ Player &Player::discover_cure(Color color)
         if (gameBoard.citiesMap[currentCity].research_lab_exist) //if there's a lab
         {
             int numCards = 0;
-
             //counting how many cards there are to this player in this color
             std::map<City, int>::iterator iter = cards.begin();
             std::map<City, int>::iterator endIter = cards.end();
@@ -72,27 +71,30 @@ Player &Player::discover_cure(Color color)
                         }
                     }
                 }
-                gameBoard.citiesMap[currentCity].diseaseLevel = 0; //cure the desease!
+               gameBoard.cures_found[gameBoard.citiesMap[currentCity].color] = true; //you found the cure!
             }
             else
             {
                 throw std::invalid_argument("You don't have enough cards of this city");
             }
-            return *this;
         }
-        return *this;
     }
+    return *this;
 }
 
 Player &Player::drive(City cityTo)
 {
     // std::string cityString = ENUM_TO_STR(cityTo);
+    if(cityTo == currentCity){
+        throw std::invalid_argument ("you can't drive to where you're already at");
+    }
     if (gameBoard.cities_connections[currentCity].find(cityTo) != gameBoard.cities_connections[currentCity].end())
     {
         currentCity = cityTo;
     }
     else
     {
+        // std::cout << cityTo;
         throw std::invalid_argument("you can't drive to this city. it's not connected to you");
     }
     return *this;
@@ -100,6 +102,9 @@ Player &Player::drive(City cityTo)
 
 Player &Player::fly_charter(City cityTo)
 {
+        if(cityTo == currentCity){
+        throw std::invalid_argument ("you can't fly to where you're already at");
+    }
     if (cards[currentCity] == 1)
     {
         cards[currentCity] = 0;
@@ -110,6 +115,9 @@ Player &Player::fly_charter(City cityTo)
 
 Player &Player::fly_direct(City cityTo)
 {
+        if(cityTo == currentCity){
+        throw std::invalid_argument ("you can't fly to where you're already at");
+    }
     if (cards[cityTo] == 1)
     {
         cards[cityTo] = 0;
@@ -120,6 +128,9 @@ Player &Player::fly_direct(City cityTo)
 
 Player &Player::fly_shuttle(City cityTo)
 {
+        if(cityTo == currentCity){
+        throw std::invalid_argument ("you can't fly to where you're already at");
+    }
     if (gameBoard.citiesMap[currentCity].research_lab_exist && gameBoard.citiesMap[cityTo].research_lab_exist)
     {
         currentCity = cityTo;
@@ -133,7 +144,7 @@ Player &Player::fly_shuttle(City cityTo)
 
 std::string Player::role()
 {
-    return "template";
+    return "default";
 }
 
 Player &Player::take_card(City city)
@@ -144,12 +155,14 @@ Player &Player::take_card(City city)
 
 Player &Player::treat(City cityTo)
 {
+    if(cityTo== currentCity){
     if (gameBoard.citiesMap[currentCity].diseaseLevel == 0)
     {
         throw std::invalid_argument("This city is already cured.");
         ;
     }
-    if (gameBoard.citiesMap[currentCity].cure_found == true)
+
+    if (gameBoard.cures_found[gameBoard.citiesMap[currentCity].color] == true)
     {
         gameBoard.citiesMap[currentCity].diseaseLevel = 0;
         return *this;
@@ -157,6 +170,10 @@ Player &Player::treat(City cityTo)
     else
     {
         gameBoard.citiesMap[currentCity].diseaseLevel -= 1;
+    }
+    }
+    else{
+        throw std::invalid_argument ("this is not the city you're in, and you're not qualified to treat another city");
     }
     return *this;
 }

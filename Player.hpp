@@ -7,7 +7,6 @@
 
 //describes the actions a player can do in this pandemic game.
 
-
 namespace pandemic
 {
     class Player
@@ -39,5 +38,16 @@ namespace pandemic
         virtual Player &take_card(City city);
 
         virtual Player &treat(City city);
+
+        void remove_cards()
+        {
+            std::map<City, int>::iterator iter = cards.begin();
+            std::map<City, int>::iterator endIter = cards.end();
+            for (; iter != endIter; ++iter)
+            {
+                City name = iter->first;
+                    iter->second = 0; //amount
+            }
+        }
     };
 }

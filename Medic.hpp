@@ -7,7 +7,7 @@ namespace pandemic
     class Medic : public Player
     {
     public:
-        Medic &treat();
+        Medic &treat(City cityTo);
         Medic (Board &board, City city) : Player(board, city)
         {
         }
